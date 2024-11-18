@@ -40,6 +40,8 @@ ionic serve
 - Se manejaron mensajes de error en caso de búsquedas sin resultados.
 - ![{E7E3A722-B793-4747-ABB7-E5DD0A4A2C4A}](https://github.com/user-attachments/assets/7f3670a5-ab41-460b-b9c2-9e3e037caacb)
 
+### APK:
+- La ruta del APK generada se encuentra en la raiz del proyecto en la carpeta APK 
 
 ## Tecnologías Utilizadas
 - **Ionic Framework**: Framework principal para la construcción del proyecto.
