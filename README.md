@@ -15,5 +15,6 @@ cd pokeapp
 npm install @angular/common @angular/http, puede que deba usar --force
 
 ionic generate service services/pokemon
+
 ionic generate page pages/pokemon-list
 
