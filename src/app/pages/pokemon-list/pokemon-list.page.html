@@ -5,12 +5,14 @@
 </ion-header>
 
 <ion-content>
+  <input type="text" placeholder="Ingresa tu pokemon" id="buscarpoke">
+  <button type="button" onclick="buscar()">Buscar</button>
   <ion-list>
     <ion-item *ngFor="let pokemon of pokemons">
       <ion-label>{{ pokemon.name | titlecase }}</ion-label>
       <a href="{{ pokemon.url}}"><ion-label>{{ pokemon.url}}</ion-label></a>
       
-    </ion-item>
+    </ion-item>   
   
   </ion-list>
 
