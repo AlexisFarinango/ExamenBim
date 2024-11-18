@@ -6,15 +6,25 @@
 
 <ion-content>
   <input type="text" placeholder="Ingresa tu pokemon" id="buscarpoke">
-  <button type="button" onclick="buscar()">Buscar</button>
+  <button type="button" (click)="buscar()">Buscar</button>
+  <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
   <ion-list>
-    <ion-item *ngFor="let pokemon of pokemons">
+    <ion-item *ngFor="let pokemon of filteredPokemons">
       <ion-label>{{ pokemon.name | titlecase }}</ion-label>
-      <a href="{{ pokemon.url}}"><ion-label>{{ pokemon.url}}</ion-label></a>
-      
-    </ion-item>   
-  
-  </ion-list>
 
+      <!-- <a href="{{ pokemon.url }}"><ion-label>{{ pokemon.url }}</ion-label></a> -->
+    </ion-item>
+  </ion-list>
+  <div *ngIf="selectedPokemon">
+    <h2>{{ selectedPokemon.name | titlecase }}</h2>
+    <img [src]="selectedPokemon.sprites?.front_default" alt="{{ selectedPokemon.name }}">
+    <p><strong>ID:</strong> {{ selectedPokemon.id }}</p>
+    <p><strong>Altura:</strong> {{ selectedPokemon.height }}</p>
+    <p><strong>Peso:</strong> {{ selectedPokemon.weight }}</p>
+    <p><strong>Habilidades:</strong></p>
+    <ul>
+      <li *ngFor="let ability of selectedPokemon.abilities">{{ ability.ability.name }}</li>
+    </ul>
+  </div>
   <ion-spinner *ngIf="loading" class="loading-spinner"></ion-spinner>
 </ion-content>
