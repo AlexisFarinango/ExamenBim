@@ -60,4 +60,5 @@ export class PokemonListPage implements OnInit {
     return result;
   }
 
+
 }

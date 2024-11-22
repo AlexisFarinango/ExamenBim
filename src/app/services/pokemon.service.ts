@@ -8,9 +8,9 @@ import { Observable } from 'rxjs';
 export class PokemonService {
   private apiUrl2 = 'https://robohash.org/';
   private apiUrl = 'https://gutendex.com/books/?ids=1';
-  // private apiURL2 = 'https://gutendex.com/books/?ids=1';
 
   constructor(private http: HttpClient) {}
+  // constructor(private http: HttpClient, private firestore: AngularFirestore) {}
 
   // Obtener la lista de Pokémon
   getlibros(limit: number = 5, offset: number = 0): Observable<any> {
@@ -32,5 +32,5 @@ export class PokemonService {
       result += characters.charAt(Math.floor(Math.random() * characters.length));
     }
     return result;
-  }
+  }  
 }
