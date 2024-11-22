@@ -6,18 +6,31 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class PokemonService {
-  private apiUrl = 'https://pokeapi.co/api/v2';
+  private apiUrl2 = 'https://robohash.org/';
+  private apiUrl = 'https://gutendex.com/books/?ids=1';
+  // private apiURL2 = 'https://gutendex.com/books/?ids=1';
 
   constructor(private http: HttpClient) {}
 
   // Obtener la lista de Pokémon
-  getPokemons(limit: number = 5, offset: number = 0): Observable<any> {
-    return this.http.get(`${this.apiUrl}/pokemon?limit=${limit}&offset=${offset}`);
+  getlibros(limit: number = 5, offset: number = 0): Observable<any> {
+    return this.http.get(`${this.apiUrl}?limit=${limit}&offset=${offset}`);
                                           
   }
 
   // Obtener detalles de un Pokémon por nombre o ID
-  getPokemonDetails(nameOrId: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/pokemon/${nameOrId}`);
+  getImageRobots(): Observable<any> {
+    const randomName = this.generateRandomLetters();
+    return this.http.get(`${this.apiUrl2}${randomName}`);
+  }
+
+  // Generar un nombre aleatorio con letras
+  private generateRandomLetters(length: number = 5): string {
+    const characters = 'abcdefghijklmnopqrstuvwxyz';
+    let result = '';
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return result;
   }
 }
