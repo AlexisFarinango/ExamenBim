@@ -1,25 +1,35 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Libros y Robots List</ion-title>
+    <ion-title>Libros y Robots</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <button style="align-items: center;">
-    Enviar
-  </button>
-  <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
-  <ion-list>
-    <ion-item *ngFor="let libro of filteredlibros">
+  <ion-spinner *ngIf="loading" class="loading-spinner"></ion-spinner>
+
+  <!-- Mostrar mensaje de error -->
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Lista de Libros con Imágenes de Robots -->
+  <ion-list *ngIf="!loading && libros.length > 0">
+    <ion-item *ngFor="let libro of filteredlibros; let i = index">
       <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
-        <ion-label>{{ libro.title | titlecase }}</ion-label>
+        <ion-label>
+          <h2>{{ libro.title }}</h2>
+        </ion-label>
         <img
           [src]="'https://robohash.org/' + generateRandomLetters()"
           alt="Robot Image"
-          style="margin-top: 10px; width: 100px; height: auto;"
-        >
+          style="margin-top: 10px; width: 100px; height: 100px;"
+        />
       </div>
     </ion-item>
   </ion-list>
-  <ion-spinner *ngIf="loading" class="loading-spinner"></ion-spinner>
+
+  <!-- Botón para enviar los datos a Firebase -->
+  <div style="text-align: center; margin-top: 20px;">
+    <ion-button (click)="sendToFirebase()">Enviar Datos a Firebase</ion-button>
+  </div>
 </ion-content>

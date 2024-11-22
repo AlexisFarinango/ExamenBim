@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PokemonService } from 'src/app/services/pokemon.service';
+import { Firestore, collection, addDoc } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-pokemon-list',
@@ -11,13 +12,11 @@ export class PokemonListPage implements OnInit {
   filteredlibros: any[] = [];
   loading = false;
   errorMessage: string | null = null;
-  robotImage: string | null = null;
 
-  constructor(private pokemonService: PokemonService) {}
+  constructor(private pokemonService: PokemonService, private firestore: Firestore) {}
 
   ngOnInit() {
     this.fetchLibros();
-    
   }
 
   fetchLibros() {
@@ -29,25 +28,32 @@ export class PokemonListPage implements OnInit {
         this.loading = false;
       },
       error: (error) => {
-        console.error('Error fetching Pokémon:', error);
+        console.error('Error fetching libros:', error);
+        this.errorMessage = 'Hubo un error al cargar los libros.';
         this.loading = false;
       },
     });
   }
 
-  getRandomRobot() {
-    this.loading = true;
-    this.pokemonService.getImageRobots().subscribe({
-      next: () => {
-        const randomName = this.generateRandomLetters();
-        this.robotImage = `${this.pokemonService['apiUrl2']}${randomName}`;
-        this.loading = false;
-      },
-      error: (error) => {
-        console.error('Error fetching robot image:', error);
-        this.robotImage = null;
-        this.loading = false;
-      },
+  sendToFirebase() {
+    this.filteredlibros.forEach((libro, index) => {
+      const robotImage = `https://robohash.org/${this.generateRandomLetters()}`;
+
+      // Crear un objeto con título e imagen
+      const data = {
+        title: libro.title,
+        image: robotImage,
+      };
+
+      // Guardar el objeto en Firestore
+      const librosCollection = collection(this.firestore, 'libros');
+      addDoc(librosCollection, data)
+        .then(() => {
+          console.log('Libro guardado:', data);
+        })
+        .catch((error) => {
+          console.error('Error al guardar en Firebase:', error);
+        });
     });
   }
 
@@ -59,6 +65,4 @@ export class PokemonListPage implements OnInit {
     }
     return result;
   }
-
-
 }
